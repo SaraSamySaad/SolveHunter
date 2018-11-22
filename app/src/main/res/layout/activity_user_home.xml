@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:background="@color/colorAccent"
+    tools:context="com.solvehunter.solution.hamza.solvehunter.UserHomeActivity">
+    <EditText
+        android:id="@+id/home_post"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="have a problem ?!"
+        android:drawableEnd="@drawable/ic_create_black_24dp"
+        android:drawableTint="@color/colorPrimaryDark"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:padding="20dp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/user_home_posts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </android.support.v7.widget.RecyclerView>
+    <ProgressBar
+        android:id="@+id/suser_home_loader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
+        android:indeterminateDrawable="@drawable/progress_color"
+        />
+
+
+</LinearLayout>

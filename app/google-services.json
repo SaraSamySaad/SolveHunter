@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "757087855360",
+    "firebase_url": "https://solvehunter.firebaseio.com",
+    "project_id": "solvehunter",
+    "storage_bucket": "solvehunter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:757087855360:android:781527cae903b98b",
+        "android_client_info": {
+          "package_name": "com.solvehunter.solution.hamza.solvehunter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "757087855360-pulpcnrds7eiogko2jm7j336u1v84fk5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.solvehunter.solution.hamza.solvehunter",
+            "certificate_hash": "b3d3c764d171f357627e1797650f79e67dccc5af"
+          }
+        },
+        {
+          "client_id": "757087855360-roeurol6mb8gmtgtn9k1r02p0amqvm3n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlJ8bxxCj0uacfBSlLbPGcX0G3dYSGc2U"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "757087855360-roeurol6mb8gmtgtn9k1r02p0amqvm3n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

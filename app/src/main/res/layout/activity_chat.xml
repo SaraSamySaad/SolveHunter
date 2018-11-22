@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorAccent"
+    android:padding="4dp"
+    android:orientation="vertical"
+    tools:context="com.solvehunter.solution.hamza.solvehunter.ChatActivity">
+    <ProgressBar
+        android:id="@+id/loader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
+        android:indeterminateDrawable="@drawable/progress_color"
+        />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/chatting"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+    </android.support.v7.widget.RecyclerView>
+
+
+        <EditText
+            android:id="@+id/message_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="10dp"
+            android:hint="type your message"
+            android:drawableRight="@drawable/ic_send_black_24dp"/>
+
+</LinearLayout>
