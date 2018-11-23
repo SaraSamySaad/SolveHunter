@@ -50,12 +50,18 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatLi
         myRef.child("Doctors").child(dialogesListData.getReciverId()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                holder.reciverName.setText(String.valueOf(dataSnapshot.child("name").getValue()));
-
-
-                if(!dataSnapshot.child("image").getValue().equals("")){
-                    Glide.with(mCtx).load(dataSnapshot.child("image").getValue()).into(holder.reciverImage);
+                if (dataSnapshot.getValue()!=null){
+                    holder.reciverName.setText(String.valueOf(dataSnapshot.child("name").getValue()));
+                    if(!dataSnapshot.child("image").getValue().equals("")){
+                        Glide.with(mCtx).load(dataSnapshot.child("image").getValue()).into(holder.reciverImage);
+                    }
                 }
+                else{
+                    holder.reciverName.setText("solve hunter doctor");
+                    dialogesListData.setReciverId("null");
+                }
+
+
 
             }
             @Override

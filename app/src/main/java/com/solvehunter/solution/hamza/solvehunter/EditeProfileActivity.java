@@ -9,6 +9,7 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -52,9 +53,21 @@ public class EditeProfileActivity extends AppCompatActivity {
         choseImage=findViewById(R.id.image_chooser);
         pref = getApplicationContext().getSharedPreferences("myPref", MODE_PRIVATE);
         editor = pref.edit();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // API 5+ solution
+                onBackPressed();
+                return true;
 
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
     @Override
     protected void onStart() {
         super.onStart();

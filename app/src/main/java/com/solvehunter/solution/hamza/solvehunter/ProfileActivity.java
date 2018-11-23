@@ -46,6 +46,7 @@ public class ProfileActivity extends AppCompatActivity {
     SharedPreferences pref;
     SharedPreferences.Editor editor;
     TextView noPosts;
+    ImageView  back;
     ImageView editProfile;
 
     @Override
@@ -63,6 +64,7 @@ public class ProfileActivity extends AppCompatActivity {
         userPostsList = new ArrayList<>();
         mAuth = FirebaseAuth.getInstance();
         logOut=findViewById(R.id.log_out);
+        back=findViewById(R.id.back);
         editProfile=findViewById(R.id.edit_profile);
         pref = getApplicationContext().getSharedPreferences("myPref", MODE_PRIVATE);
     }
@@ -94,6 +96,12 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         myRef.child("acceptedPosts").orderByChild("uploadedById").equalTo(mAuth.getCurrentUser().getUid())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override

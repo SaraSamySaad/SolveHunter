@@ -59,7 +59,7 @@ public class userHomePostsAdapter extends RecyclerView.Adapter<userHomePostsAdap
     @Override
     public void onBindViewHolder(@NonNull final userHomeViewHolder holder, int position) {
         mAuth = FirebaseAuth.getInstance();
-        final UserHomePosts userHomePosts = userHomePostsList.get(position);
+        final UserHomePosts userHomePosts = userHomePostsList.get(userHomePostsList.size()-1- position);
         holder.body.setText(userHomePosts.getBody());
         holder.likes.setText(String.valueOf(userHomePosts.getLikes()));
         holder.comments.setText("comments (" + userHomePosts.getComments() + ")");

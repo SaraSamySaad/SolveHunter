@@ -6,6 +6,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -40,8 +41,21 @@ public class RequestChatActivity extends AppCompatActivity {
         sendRequest=findViewById(R.id.send_request);
         loader=findViewById(R.id.loader);
         mAuth = FirebaseAuth.getInstance();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         acceptPay.setText("by select this you agree to pay "+getIntent().getExtras().getString("price")+" to doctor");
 
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // API 5+ solution
+                onBackPressed();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

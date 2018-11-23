@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,6 +36,7 @@ public class ChatActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     EditText messageBody;
     ProgressBar loader;
+    TextView endChat;
 
 
     @Override
@@ -46,10 +49,36 @@ public class ChatActivity extends AppCompatActivity {
         dialogesDataList = new ArrayList<>();
         mAuth=FirebaseAuth.getInstance();
         loader=findViewById(R.id.loader);
+        endChat=findViewById(R.id.end_chat);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getData();
 
 
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // API 5+ solution
+                onBackPressed();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (getIntent().getExtras().getString("senderId").equals("null")){
+            messageBody.setVisibility(View.GONE);
+            endChat.setVisibility(View.VISIBLE);
+
+        }
+    }
+
     public void getData(){
         loader.setVisibility(View.VISIBLE);
         myRef.child("Dialoges").child(getIntent().getExtras().getString("chatId")).addValueEventListener(new ValueEventListener() {
