@@ -17,7 +17,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.bumptech.glide.Glide;
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,8 +32,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.List;
+
+import okhttp3.OkHttpClient;
 
 /**
  * Created by C.M on 16/10/2018.
@@ -42,6 +52,12 @@ public class userHomePostsAdapter extends RecyclerView.Adapter<userHomePostsAdap
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
     private FirebaseAuth mAuth;
+
+    JSONObject message;
+    JSONObject messageInfo;
+
+    private final String PUSH_URL = "https://fcm.googleapis.com/fcm/send";
+
 
     public userHomePostsAdapter(Context mCtx, List<UserHomePosts> userHomePostsList) {
         this.mCtx = mCtx;
@@ -143,6 +159,66 @@ public class userHomePostsAdapter extends RecyclerView.Adapter<userHomePostsAdap
                                                                 public void onComplete(@NonNull Task<Void> task) {
                                                                     userHomePosts.setLikes(userHomePosts.getLikes()+1);
                                                                     holder.likes.setText(String.valueOf(userHomePosts.getLikes()));
+
+                                                                    myRef.child("PushTokens/" + userHomePosts.getUploadedById()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                                        @Override
+                                                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                                                            String userToken = (String) dataSnapshot.getValue();
+
+                                                                            message = new JSONObject();
+                                                                            messageInfo = new JSONObject();
+
+                                                                            try {
+                                                                                messageInfo.put("title", "New Like");
+                                                                                messageInfo.put("message", "Your Post have new like");
+                                                                                //messageInfo.put("image-url", "https://lh3.googleusercontent.com/JrGwExTVGhm24PWMa6mjFFPXMmE1n-LnBtRC1_jtV_gmKiVrt9hVYPoZQPC9e66FBA=h900");
+                                                                            } catch (JSONException e) {
+                                                                                e.printStackTrace();
+                                                                            }
+
+                                                                            try {
+                                                                                message.put("to", userToken);
+                                                                                message.put("data", messageInfo);
+                                                                            } catch (JSONException e) {
+                                                                                e.printStackTrace();
+                                                                            }
+
+
+                                                                            AndroidNetworking.initialize(holder.itemView.getContext());
+
+                                                                            OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
+                                                                                    .addNetworkInterceptor(new StethoInterceptor()).build();
+
+                                                                            AndroidNetworking.initialize(holder.itemView.getContext(), okHttpClient);
+
+
+                                                                            AndroidNetworking.post(PUSH_URL)
+                                                                                    .addJSONObjectBody(message)
+                                                                                    .addHeaders("Authorization", "key=AAAAsEXz4wA:APA91bHV_ac2eQUUdokYPWhDEQSCx0D42J_uHxrH5MaZM3_86NNs0-GrPnXdtwAnst0D4sgrrMinVK5KzgdstdYilPOUNksxcX0KgngB49yf7bz7Y347g1lcEiNscpRhRCIHqZx8yQNc")
+                                                                                    .addHeaders("Content-Type", "application/json")
+                                                                                    .setPriority(Priority.MEDIUM)
+                                                                                    .build()
+                                                                                    .getAsJSONObject(new JSONObjectRequestListener() {
+                                                                                        @Override
+                                                                                        public void onResponse(JSONObject response) {
+
+                                                                                        }
+
+                                                                                        @Override
+                                                                                        public void onError(ANError anError) {
+                                                                                        }
+                                                                                    });
+
+
+                                                                        }
+
+                                                                        @Override
+                                                                        public void onCancelled(DatabaseError databaseError) {
+
+                                                                        }
+                                                                    });
+
+
                                                                     for (Drawable drawable : holder.likes.getCompoundDrawables()) {
                                                                         if (drawable != null) {
                                                                             DrawableCompat.setTint(drawable, ContextCompat.getColor(mCtx, R.color.colorPrimaryDark));

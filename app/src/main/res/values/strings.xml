@@ -6,4 +6,7 @@
     <string name="title_activity_chat_user">ChatUserActivity</string>
     <string name="tab_text_1">chat</string>
     <string name="tab_text_2">view doctors</string>
+
+    <string name="notifications_admin_channel_name">Global channel</string>
+    <string name="notifications_admin_channel_description">Notifications sent from the app admin</string>
 </resources>
